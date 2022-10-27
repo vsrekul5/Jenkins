@@ -29,6 +29,7 @@ pipeline{
             steps{                    
               sshagent(['ubuntu']) {
                     sh 'ssh -t -t ubuntu@ec2-52-90-52-83.compute-1.amazonaws.com -o StrictHostKeyChecking=no'
+		      sh 'docker pull vsrekul/firstjenkins:$BUILD_NUMBER'
                     sh 'docker service create --name my-jenkins-1 -p 8051:80 --replicas=2 vsrekul/firstjenkins:$BUILD_NUMBER'
               }                
                 
