@@ -15,9 +15,8 @@ pipeline{
         stage('Publish image to Docker Hub') {
             steps {
                 sh 'docker login -u vsrekul -p vijay@100*'
-                sh  'docker push vsrekul/firstjenkins:$BUILD_NUMBER'
-                    
-                }
+                sh  'docker push vsrekul/firstjenkins:$BUILD_NUMBER'                   
+                
                         
             }
         }
