@@ -14,8 +14,8 @@ pipeline{
         }       
         stage('Publish image to Docker Hub') {
             steps {
-                withDockerRegistry([ credentialsId: "vsrekul", url: "" ]) {
-                    sh  'docker push vsrekul/firstjenkins:$BUILD_NUMBER'
+                sh 'docker login -u vsrekul -p vijay@100*'
+                sh  'docker push vsrekul/firstjenkins:$BUILD_NUMBER'
                     
                 }
                         
