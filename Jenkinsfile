@@ -7,11 +7,9 @@ pipeline{
             }            
         }
         stage("Build Image"){
-            steps{
-                sshagent(['ec2login']) {    
-                    sh 'ssh -o strictHostKeyChecking=no ec2-3-89-104-141.compute-1.amazonaws.com'                               
-                    sh 'docker run vsrekul/firstjenkins'                 
-                }
+            steps{                    
+              sh 'docker build -t vsrekul/firstjenkins .'                 
+                
             }            
         }
     }
