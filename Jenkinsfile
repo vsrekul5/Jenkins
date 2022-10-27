@@ -1,5 +1,8 @@
 pipeline{
-    agent any   
+    agent any  
+    environment {
+		DOCKERHUB_CREDENTIALS=credentials('vsrekul')
+	} 
     stages{
         stage("This is to checkout git"){
             steps{
@@ -14,7 +17,7 @@ pipeline{
         }       
         stage('Publish image to Docker Hub') {
             steps {
-                sh 'echo $vsrekul_PSW | docker login -u vsrekul --password-stdin'
+                sh 'docker login -u $DOCKERHUB_CREDENTIALS_USR -p $DOCKERHUB_CREDENTIALS_PSW'
                 //sh 'docker login -u vsrekul -p vijay@100*'
                 sh  'docker push vsrekul/firstjenkins:$BUILD_NUMBER'
                   
