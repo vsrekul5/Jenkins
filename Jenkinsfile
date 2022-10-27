@@ -14,8 +14,8 @@ pipeline{
         }        
         stage("Docker Push"){
             steps{
-            withCredentials([gitUsernamePassword(credentialsId: 'vsrekul', gitToolName: 'Default')]) {
-              sh "docker login -u vsrekul -p ${vsrekul}"
+            withCredentials([string(credentialsId: 'vsrekul', variable: 'Docker_Hub_Pwd')]) {
+                sh "docker login -u vsrekul -p ${vsrekul}"
             }
             sh "docker push vsrekul/firstjenkins:1.0"
             }            
