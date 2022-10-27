@@ -8,23 +8,24 @@ pipeline{
         }
         stage("Build Image"){
             steps{                    
-            sh 'docker build -t vsrekul/firstjenkins .'                 
+            sh 'docker build -t vsrekul/firstjenkins:$BUILD_NUMBER .'                 
                 
             }            
-        }        
-        stage("Docker Push"){
-            steps{
-                withCredentials([usernamePassword(credentialsId: 'vsrekul', passwordVariable: 'vs_passwd', usernameVariable: 'vsrekul')]) { 
-                    sh "docker login -u vsrekul -p ${vs_passwd}"    
+        }       
+        stage('Publish image to Docker Hub') {
+            steps {
+                withDockerRegistry([ credentialsId: "vsrekul", url: "" ]) {
+                    sh  'docker push vsrekul/firstjenkins:$BUILD_NUMBER'
+                    
                 }
-                sh "docker push vsrekul/firstjenkins:1.0"
-            }            
+                        
+            }
         }
         stage("Create service from image"){
             steps{                    
               sshagent(['ubuntu']) {
                     sh 'ssh -o StrictHostKeyCheck=no ec2-54-221-38-54.compute-1.amazonaws.com'
-                    sh 'docker service create --name my-jenkins --publish target=80,published=80 --replicas=2 vsrekul/firstjenkins:1.0'
+                    sh 'docker service create --name my-jenkins --publish target=80,published=80 --replicas=2 vsrekul/firstjenkins:$BUILD_NUMBER'
               }                
                 
             }            
