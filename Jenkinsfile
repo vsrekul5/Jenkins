@@ -28,7 +28,7 @@ pipeline{
         stage("Create service from image"){
             steps{                    
               sshagent(['ubuntu']) {
-                    sh 'ssh -o StrictHostKeyChecking=no ec2-54-221-38-54.compute-1.amazonaws.com'
+                    sh 'ssh -t -t ubuntu@ec2-54-221-38-54.compute-1.amazonaws.com -o StrictHostKeyChecking=no '
                     sh 'docker service create --name my-jenkins --publish target=80,published=80 --replicas=2 vsrekul/firstjenkins:$BUILD_NUMBER'
               }                
                 
