@@ -14,10 +14,10 @@ pipeline{
         }        
         stage("Docker Push"){
             steps{
-            withCredentials([string(credentialsId: 'vsrekul', variable: 'Docker_Hub_Pwd')]) {
-                sh "docker login -u vsrekul -p ${vsrekul}"
-            }
-            sh "docker push vsrekul/firstjenkins:1.0"
+                withCredentials([usernamePassword(credentialsId: 'vsrekul', passwordVariable: 'vs_passwd', usernameVariable: 'vsrekul')]) { 
+                    sh "docker login -u vsrekul -p ${vs_passwd}"    
+                }
+                sh "docker push vsrekul/firstjenkins:1.0"
             }            
         }
         stage("Create service from image"){
