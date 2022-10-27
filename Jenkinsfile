@@ -15,11 +15,12 @@ pipeline{
         }
         }
         stage("Docker Push"){
+            steps{
             withCredentials([gitUsernamePassword(credentialsId: 'vsrekul', gitToolName: 'Default')]) {
               sh "docker login -u vsrekul -p ${vsrekul}"
             }
             sh "docker push vsrekul/firstjenkins:1.0"
-            
+            }            
         }
         stage("Create service from image"){
             steps{                    
