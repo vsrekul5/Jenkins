@@ -1,6 +1,5 @@
 pipeline{
-    agent any
-    stages{
+    agent any   
     stages{
         stage("This is to checkout git"){
             steps{
@@ -12,8 +11,7 @@ pipeline{
             sh 'docker build -t vsrekul/firstjenkins .'                 
                 
             }            
-        }
-        }
+        }        
         stage("Docker Push"){
             steps{
             withCredentials([gitUsernamePassword(credentialsId: 'vsrekul', gitToolName: 'Default')]) {
