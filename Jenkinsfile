@@ -14,12 +14,14 @@ pipeline{
         }       
         stage('Publish image to Docker Hub') {
             steps {
-                sh 'docker login -u vsrekul -p vijay@100*'
-                sh  'docker push vsrekul/firstjenkins:$BUILD_NUMBER'                   
-                
+                sh 'echo $vsrekul_PSW | docker login -u vsrekul --password-stdin'
+                //sh 'docker login -u vsrekul -p vijay@100*'
+                sh  'docker push vsrekul/firstjenkins:$BUILD_NUMBER'
+                  
+                }
                         
             }
-        }
+        
         stage("Create service from image"){
             steps{                    
               sshagent(['ubuntu']) {
