@@ -19,9 +19,10 @@ pipeline{
             steps {
                 sh 'docker login -u $DOCKERHUB_CREDENTIALS_USR -p $DOCKERHUB_CREDENTIALS_PSW'
                 //sh 'docker login -u vsrekul -p vijay@100*'
+	    }
                 sh  'docker push vsrekul/firstjenkins:$BUILD_NUMBER'
                   
-                }
+                
                         
             }
         
